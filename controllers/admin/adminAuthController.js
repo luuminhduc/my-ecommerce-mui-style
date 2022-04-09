@@ -7,7 +7,7 @@ const { checkAdminJwt } = require("../../helpers/checkJwt");
 const tokeAge = 365 * 24 * 60 * 60;
 
 const createToken = (id) => {
-	return jwt.sign({ id }, process.env.jwtToken, {
+	return jwt.sign({ id }, process.env.adminJwt, {
 		expiresIn: tokeAge,
 	});
 };
