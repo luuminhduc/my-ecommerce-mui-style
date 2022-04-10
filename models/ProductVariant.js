@@ -6,7 +6,7 @@ const ProductVariantSchema = new mongoose.Schema({
 		required: true,
 	},
 	images: {
-		type: String,
+		type: [String],
 		required: true,
 		min: 1,
 	},

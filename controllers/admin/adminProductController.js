@@ -31,4 +31,26 @@ const addProduct = async (req, res) => {
 	}
 };
 
-module.exports = { addProduct };
+const editProduct = async (req, res) => {
+	const uid = await checkAdminJwt(req);
+	if (!uid) return resFailure(res, 422, "Unauthenticated");
+
+	try {
+		const { id } = req.params;
+		const { title, description, category, subCategory, variants } = req.body;
+		const product = await Product.findByIdAndUpdate(
+			id,
+			{
+				title: title ? title : this.title,
+				description: description ? description : this.description,
+				category: category ? category : this.category,
+				subCategory: subCategory ? subCategory : this.subCategory,
+				variants: variants?.length > 0 ? variants : this.variants,
+			},
+			{ new: true }
+		);
+		resSuccess(res, 200, { product });
+	} catch (err) {}
+};
+
+module.exports = { addProduct, editProduct };
