@@ -2,7 +2,6 @@ const { resFailure, resSuccess } = require("../../helpers/formatRes");
 const Admin = require("../../models/Admin");
 const jwt = require("jsonwebtoken");
 const Jwt = require("../../models/AdminJwt");
-const { checkAdminJwt } = require("../../helpers/checkJwt");
 
 const tokeAge = 365 * 24 * 60 * 60;
 

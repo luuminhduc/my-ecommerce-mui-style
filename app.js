@@ -7,6 +7,7 @@ const userAuthRoute = require("./routes/users/userAuthRoute");
 const categoryRoute = require("./routes/categoryRoute");
 const productRoute = require("./routes/productRoute");
 const productVariantRoute = require("./routes/productVariantRoute");
+const attributeRoute = require("./routes/attributeRoute");
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(userAuthRoute);
 app.use(categoryRoute);
 app.use(productRoute);
 app.use(productVariantRoute);
+app.use(attributeRoute);
 
 const PORT = process.env.PORT || 4000;
 
