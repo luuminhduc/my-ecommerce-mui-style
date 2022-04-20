@@ -9,7 +9,7 @@ const { getSingleProduct } = require("../controllers/productController");
 
 const route = express.Router();
 
-route.get("/admin/producys", getProducts);
+route.get("/admin/products", getProducts);
 
 route.post("/admin/products", addProduct);
 
