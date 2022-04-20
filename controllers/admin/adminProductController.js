@@ -59,7 +59,7 @@ const getProducts = async (req, res) => {
 	if (!uid) return resFailure(res, 422, "Unauthenticated");
 	try {
 		const products = await Product.find();
-		resSuccess(res, 200, { products });
+		resSuccess(res, 200, { products, page: 1, total: 4, perPage: 5 });
 	} catch (err) {
 		resFailure(res, 400, err.message);
 	}
