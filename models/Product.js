@@ -1,11 +1,5 @@
 const mongoose = require("mongoose");
 
-const ProductVariantOption = new mongoose.Schema({
-	name: {
-		type: String,
-	},
-});
-
 const ProductSchema = new mongoose.Schema({
 	title: {
 		type: String,
@@ -27,9 +21,21 @@ const ProductSchema = new mongoose.Schema({
 		type: Date,
 		default: new Date(),
 	},
-	variants: {
+	attributes: {
 		type: [String],
 		min: 1,
+	},
+	status: {
+		type: Boolean,
+		default: true,
+	},
+	discount: {
+		type: Boolean,
+		default: false,
+	},
+	discountRate: {
+		type: Number,
+		default: 0,
 	},
 });
 

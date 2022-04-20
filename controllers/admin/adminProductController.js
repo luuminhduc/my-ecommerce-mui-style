@@ -7,13 +7,13 @@ const addProduct = async (req, res) => {
 	if (!uid) return resFailure(res, 422, "Unauthenticated");
 
 	try {
-		const { title, description, category, subCategory, variants } = req.body;
+		const { title, description, category, subCategory, attributes } = req.body;
 		if (
 			!title ||
 			!description ||
 			!category ||
 			!subCategory ||
-			variants?.length < 1
+			attributes?.length < 1
 		)
 			return resFailure(res, 400, "Missing fields");
 
@@ -22,7 +22,7 @@ const addProduct = async (req, res) => {
 			description,
 			category,
 			subCategory,
-			variants,
+			attributes,
 		});
 
 		resSuccess(res, 200, { product });
@@ -37,7 +37,7 @@ const editProduct = async (req, res) => {
 
 	try {
 		const { id } = req.params;
-		const { title, description, category, subCategory, variants } = req.body;
+		const { title, description, category, subCategory, attributes } = req.body;
 		const product = await Product.findByIdAndUpdate(
 			id,
 			{
@@ -45,7 +45,7 @@ const editProduct = async (req, res) => {
 				description: description ? description : this.description,
 				category: category ? category : this.category,
 				subCategory: subCategory ? subCategory : this.subCategory,
-				variants: variants?.length > 0 ? variants : this.variants,
+				attributes: attributes?.length > 0 ? attributes : this.attributes,
 			},
 			{ new: true }
 		);
@@ -53,4 +53,15 @@ const editProduct = async (req, res) => {
 	} catch (err) {}
 };
 
-module.exports = { addProduct, editProduct };
+const getProducts = async () => {
+	const uid = await checkAdminJwt(req);
+	if (!uid) return resFailure(res, 422, "Unauthenticated");
+	try {
+		const products = await Product.find();
+		resSuccess(res, 200, { products });
+	} catch (err) {
+		resFailure(res, 400, err.message);
+	}
+};
+
+module.exports = { addProduct, editProduct, getProducts };
