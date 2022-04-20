@@ -1,6 +1,7 @@
 const { checkAdminJwt } = require("../../helpers/checkJwt");
 const { resFailure, resSuccess } = require("../../helpers/formatRes");
 const Product = require("../../models/Product");
+const ProductVariant = require("../../models/ProductVariant");
 
 const addProduct = async (req, res) => {
 	const uid = await checkAdminJwt(req);
@@ -53,7 +54,7 @@ const editProduct = async (req, res) => {
 	} catch (err) {}
 };
 
-const getProducts = async () => {
+const getProducts = async (req, res) => {
 	const uid = await checkAdminJwt(req);
 	if (!uid) return resFailure(res, 422, "Unauthenticated");
 	try {
@@ -64,4 +65,17 @@ const getProducts = async () => {
 	}
 };
 
-module.exports = { addProduct, editProduct, getProducts };
+const deleteProduct = async (req, res) => {
+	const uid = await checkAdminJwt(req);
+	if (!uid) return resFailure(res, 422, "Unauthenticated");
+	try {
+		const { id } = req.params;
+		await Product.findByIdAndDelete(id);
+		await ProductVariant.deleteMany({ product_id: id });
+		resSuccess(res, 200, {});
+	} catch (err) {
+		resFailure(res, 400, err.message);
+	}
+};
+
+module.exports = { addProduct, editProduct, getProducts, deleteProduct };

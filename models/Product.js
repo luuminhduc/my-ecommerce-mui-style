@@ -4,6 +4,7 @@ const ProductSchema = new mongoose.Schema({
 	title: {
 		type: String,
 		required: true,
+		unique: true,
 	},
 	description: {
 		type: String,
@@ -36,6 +37,10 @@ const ProductSchema = new mongoose.Schema({
 	discountRate: {
 		type: Number,
 		default: 0,
+	},
+	brand: {
+		type: String,
+		required: false,
 	},
 });
 
